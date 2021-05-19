@@ -12,23 +12,26 @@ children_name = 'find'
 items_name    = 'get'
 text_name     = 'text'
 
+
 def strip_or_none(maybetxt):
     return maybetxt and maybetxt.strip()
+
+
+def check_sanity(text, children, tail):
+    if tail:
+        RuntimeError("no tails allowed")
+
+    if text and children:
+        raise RuntimeError("bad mix of text and tags")
+
 
 def xform_element(elt):
     attrs    = dict(elt.items())
     text     = strip_or_none(elt.text)
     children = list(elt.getchildren())
     tail     = strip_or_none(elt.tail)
-    return     xform_element_body(attrs, text, children, tail)
 
-
-def xform_element_body(attrs, text, children, tail):
-    if tail:
-        RuntimeError("no tails allowed")
-
-    if text and children:
-        raise RuntimeError("bad mix of text and tags")
+    check_sanity(text, children, tail)
 
     d = {}
     if attrs:    d[items_name]    = attrs
@@ -51,6 +54,7 @@ def main():
     xmltree = et.fromstring(xmltxt)
     dat = xform_element(xmltree)
     print(json.dumps(dat, sort_keys=1, indent=2))
+
 
 if __name__ == '__main__':
     main()
