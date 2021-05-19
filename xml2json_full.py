@@ -11,19 +11,19 @@ def strip_or_none(maybetxt):
     return maybetxt and maybetxt.strip()
 
 def xform_element(elt):
-    name     = re.sub(r'\{.*\}', '', elt.tag)
-    attr     = [ dict(key=k, value=v) for k,v in elt.items() ]
-    text     = strip_or_none(elt.text)
-    children = elt.getchildren()
-    tail     = strip_or_none(elt.tail)
-    body     = list(xform_element_body_gen(text, children, tail))
+    name = re.sub(r'\{.*\}', '', elt.tag)
+    attr = [ dict(key=k, value=v) for k,v in elt.items() ]
+    text = strip_or_none(elt.text)
+    elts = elt.getchildren()
+    tail = strip_or_none(elt.tail)
+    body = list(xform_element_body_gen(text, elts, tail))
     return dict(type='tag', name=name, attr=attr, body=body)
 
 
-def xform_element_body_gen(text, children, tail):
+def xform_element_body_gen(text, elts, tail):
     if text:
         yield dict(type='text', value=text)
-    for elt in children:
+    for elt in elts:
         yield xform_element(elt)
     if tail:
         yield dict(type='text', value=tail)
