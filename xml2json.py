@@ -8,9 +8,9 @@ import sys
 import os
 import re
 
-attrs_name = 'attr'
-elts_name  = 'tags'
-text_name  = 'text'
+attr_name = 'attr'
+elts_name = 'tags'
+text_name = 'text'
 
 
 def strip_or_none(maybetxt):
@@ -26,17 +26,17 @@ def check_sanity(text, elts, tail):
 
 
 def xform_element(elt):
-    attrs = dict(elt.items())
-    elts  = list(elt.getchildren())
-    text  = strip_or_none(elt.text)
-    tail  = strip_or_none(elt.tail)
+    attr = dict(elt.items())
+    elts = list(elt.getchildren())
+    text = strip_or_none(elt.text)
+    tail = strip_or_none(elt.tail)
 
     check_sanity(text, elts, tail)
 
     d = {}
-    if attrs: d[attrs_name] = attrs
-    if text:  d[text_name]  = text
-    if elts:  d[elts_name]  = buckettize(elts)
+    if attr: d[attr_name] = attr
+    if text: d[text_name] = text
+    if elts: d[elts_name] = buckettize(elts)
     return d
 
 
