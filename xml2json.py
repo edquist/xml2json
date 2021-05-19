@@ -48,14 +48,15 @@ def buckettize(elts):
     return ld
 
 
-def main():
-    inf = sys.argv[1]
+def main(args):
+    indent = None if args[1:] == ['--noindent'] else 2
+    inf = args[0]
     xmltxt = open(inf).read()
     xmltree = et.fromstring(xmltxt)
     dat = xform_element(xmltree)
-    print(json.dumps(dat, sort_keys=1, indent=2))
+    print(json.dumps(dat, sort_keys=1, indent=indent))
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
 
