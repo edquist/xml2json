@@ -8,41 +8,41 @@ import sys
 import os
 import re
 
-children_name = 'find'
-items_name    = 'get'
-text_name     = 'text'
+attrs_name = 'get'
+elts_name  = 'find'
+text_name  = 'text'
 
 
 def strip_or_none(maybetxt):
     return maybetxt and maybetxt.strip()
 
 
-def check_sanity(text, children, tail):
+def check_sanity(text, elts, tail):
     if tail:
         RuntimeError("no tails allowed")
 
-    if text and children:
+    if text and elts:
         raise RuntimeError("bad mix of text and tags")
 
 
 def xform_element(elt):
-    attrs    = dict(elt.items())
-    text     = strip_or_none(elt.text)
-    children = list(elt.getchildren())
-    tail     = strip_or_none(elt.tail)
+    attrs = dict(elt.items())
+    elts  = list(elt.getchildren())
+    text  = strip_or_none(elt.text)
+    tail  = strip_or_none(elt.tail)
 
-    check_sanity(text, children, tail)
+    check_sanity(text, elts, tail)
 
     d = {}
-    if attrs:    d[items_name]    = attrs
-    if text:     d[text_name]     = text
-    if children: d[children_name] = more_tags(children)
+    if attrs: d[attrs_name] = attrs
+    if text:  d[text_name]  = text
+    if elts:  d[elts_name]  = buckettize(elts)
     return d
 
 
-def more_tags(children):
+def buckettize(elts):
     ld = collections.defaultdict(list)
-    for elt in children:
+    for elt in elts:
         name = re.sub(r'\{.*\}', '', elt.tag)
         ld[name].append(xform_element(elt))
     return ld
