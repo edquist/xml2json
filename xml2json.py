@@ -49,6 +49,9 @@ def buckettize(elts):
 
 
 def main(args):
+    if not args or args[0] == '--help':
+        print("usage: %s file.xml [--noindent]" % os.path.basename(__file__))
+        sys.exit()
     indent = None if args[1:] == ['--noindent'] else 2
     inf = args[0]
     xmltxt = open(inf).read()
