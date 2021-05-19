@@ -8,9 +8,9 @@ import sys
 import os
 import re
 
-children_name = 'children'
-items_name    = 'attrs'
-text_name     = 'value'
+children_name = 'find'
+items_name    = 'get'
+text_name     = 'text'
 
 def strip_or_none(maybetxt):
     return maybetxt and maybetxt.strip()
