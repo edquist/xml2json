@@ -16,8 +16,7 @@ def xform_element(elt):
     text     = strip_or_none(elt.text)
     children = list(elt.getchildren())
     tail     = strip_or_none(elt.tail)
-    bodykw   = xform_element_body(attrs, text, children, tail)
-    return bodykw
+    return     xform_element_body(attrs, text, children, tail)
 
 
 def xform_element_body(attrs, text, children, tail):
@@ -28,13 +27,9 @@ def xform_element_body(attrs, text, children, tail):
         raise RuntimeError("bad mix of text and tags")
 
     d = {}
-    if attrs:
-        d['attrs'] = attrs
-    if text:
-        d['value'] = text
-    if children:
-        d['children'] = more_tags(children)
-
+    if attrs:    d['attrs'] = attrs
+    if text:     d['value'] = text
+    if children: d['children'] = more_tags(children)
     return d
 
 
