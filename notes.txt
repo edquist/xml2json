@@ -1,0 +1,28 @@
+
+
+[ 'tag', {
+    'name': tag_name,
+    'attrs': [ [key1, val1], [key2, val2], ... ],
+    'body': [
+      [ 'tag',  { ... } ],
+      [ 'tag',  { ... } ],
+      [ 'text', "text1" ],
+      [ 'tag',  { ... } ],
+      [ 'tag',  { ... } ],
+      [ 'text', "text2" ],
+      [ 'tag',  { ... } ],
+    ]
+  }
+]
+
+ITEM = TAG | TEXT
+KEY  = str
+VAL  = str | None
+ATTR = [ KEY, VAL ]
+TAG = [ 'tag', {
+    'name': str,
+    'attrs': [ ATTR* ],
+    'body': [ ITEM* ],
+  }
+]
+
