@@ -12,21 +12,21 @@ def strip_or_none(maybetxt):
 
 def xform_element(elt):
     name     = re.sub(r'\{.*\}', '', elt.tag)
-    attrs    = list(elt.items())
+    attr     = list(elt.items())
     text     = strip_or_none(elt.text)
     children = elt.getchildren()
     tail     = strip_or_none(elt.tail)
     body     = list(xform_element_body_gen(text, children, tail))
-    return ('tag', dict(name=name, attrs=attrs, body=body))
+    return dict(type='tag', name=name, attr=attr, body=body)
 
 
 def xform_element_body_gen(text, children, tail):
     if text:
-        yield ('text', text)
+        yield dict(type='text', value=text)
     for elt in children:
         yield xform_element(elt)
     if tail:
-        yield ('text', tail)
+        yield dict(type='text', value=tail)
 
 def main():
     inf = sys.argv[1]
