@@ -8,6 +8,10 @@ import sys
 import os
 import re
 
+children_name = 'children'
+items_name    = 'attrs'
+text_name     = 'value'
+
 def strip_or_none(maybetxt):
     return maybetxt and maybetxt.strip()
 
@@ -27,9 +31,9 @@ def xform_element_body(attrs, text, children, tail):
         raise RuntimeError("bad mix of text and tags")
 
     d = {}
-    if attrs:    d['attrs'] = attrs
-    if text:     d['value'] = text
-    if children: d['children'] = more_tags(children)
+    if attrs:    d[items_name]    = attrs
+    if text:     d[text_name]     = text
+    if children: d[children_name] = more_tags(children)
     return d
 
 
