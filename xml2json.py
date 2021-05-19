@@ -8,8 +8,8 @@ import sys
 import os
 import re
 
-attrs_name = 'get'
-elts_name  = 'find'
+attrs_name = 'attr'
+elts_name  = 'tags'
 text_name  = 'text'
 
 
