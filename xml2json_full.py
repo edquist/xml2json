@@ -12,7 +12,7 @@ def strip_or_none(maybetxt):
 
 def xform_element(elt):
     name     = re.sub(r'\{.*\}', '', elt.tag)
-    attr     = list(elt.items())
+    attr     = [ dict(key=k, value=v) for k,v in elt.items() ]
     text     = strip_or_none(elt.text)
     children = elt.getchildren()
     tail     = strip_or_none(elt.tail)
